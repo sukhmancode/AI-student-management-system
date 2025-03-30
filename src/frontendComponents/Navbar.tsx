@@ -4,7 +4,14 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import {
   BookOpen,
   CheckCircle,
@@ -14,6 +21,8 @@ import {
   Upload,
   Users,
 } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { TeacherLogin } from "./TeacherLogin"
 
 export function Header() {
   const [activeFeature, setActiveFeature] = useState(0)
@@ -110,12 +119,31 @@ export function Header() {
             transition={{ duration: 0.5 }}
             className="flex items-center gap-4"
           >
-            <Link href="#" className="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400">
-              Log in
-            </Link>
+          
+            <Dialog>
+            <DialogTrigger>
             <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-200">
-              Sign up
+              Log in
             </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                <Tabs defaultValue="account" className="w-[400px]">
+                    <TabsList>
+                      <TabsTrigger value="Teacher">Teacher</TabsTrigger>
+                      <TabsTrigger value="password">Password</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="Teacher">
+                      <TeacherLogin/>
+                    </TabsContent>
+                    <TabsContent value="password">Change your password here.</TabsContent>
+                  </Tabs>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           </motion.div>
         </div>
       </header>

@@ -24,8 +24,14 @@ import {
   Lightbulb,
 } from "lucide-react"
 import { Header } from "@/frontendComponents/Navbar"
+import {  useRouter } from "next/navigation"
 
 export default function LandingPage() {
+  const router = useRouter();
+  const teacherID = sessionStorage.getItem("teacherId");
+  if(teacherID) {
+    router.push(`/dashboard/teacher`)
+  }
   const [activeFeature, setActiveFeature] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
 

@@ -10,7 +10,7 @@ import { DashboardLinks } from "@/frontendComponents/DashboardLinks";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname(); 
-
+    
     // ✅ Determine role based on URL
     const role: "student" | "teacher" = pathname.includes("/teacher") ? "teacher" : "student";
 
