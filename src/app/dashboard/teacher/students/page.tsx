@@ -17,13 +17,21 @@ interface Student {
 
 export default function StudentAssignments() {
     const [students, setStudents] = useState<Student[]>([]);
-    const teacherID = sessionStorage.getItem("teacherId");
-    
+    const [teacherID, setTeacherID] = useState<string | null>(null);
+
+    // Ensure `sessionStorage` is accessed only on the client side
     useEffect(() => {
+        const storedTeacherID = sessionStorage.getItem("teacherId");
+        setTeacherID(storedTeacherID);
+    }, []);
+
+    useEffect(() => {
+        if (!teacherID) return; // Prevent API call if teacherID is not available
+
         axios.get(`https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/${teacherID}`)
             .then(response => setStudents(response.data))
             .catch(error => console.error("Error fetching student data", error));
-    }, []);
+    }, [teacherID]); // Only fetch data when `teacherID` is available
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
@@ -38,12 +46,16 @@ export default function StudentAssignments() {
                             <div className="mt-2">
                                 <h3 className="font-semibold">Assignments:</h3>
                                 <ul className="mt-1 space-y-1">
-                                    {student.assignments.map((assignment, index) => (
-                                        <li key={index} className="flex justify-between text-sm bg-gray-100 p-2 rounded">
-                                            <span>{assignment.title}</span>
-                                            <span className="font-bold">{assignment.grade}</span>
-                                        </li>
-                                    ))}
+                                    {student.assignments.length > 0 ? (
+                                        student.assignments.map((assignment, index) => (
+                                            <li key={index} className="flex justify-between text-sm bg-gray-100 p-2 rounded">
+                                                <span>{assignment.title}</span>
+                                                <span className="font-bold">{assignment.grade}</span>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-gray-500">No assignments available</p>
+                                    )}
                                 </ul>
                             </div>
                         </CardContent>
