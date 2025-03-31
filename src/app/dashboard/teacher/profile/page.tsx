@@ -15,25 +15,32 @@ export default function TeacherDetail() {
   const router = useRouter();
   const [teacher, setTeacher] = useState<Teacher | null>(null);
   const [loading, setLoading] = useState(true);
-  const teacherID = sessionStorage.getItem("teacherId");
+  const [teacherID, setTeacherID] = useState<string | null>(null);
 
+  // Get teacher ID from sessionStorage on client-side
   useEffect(() => {
-    if (!teacherID) {
+    const storedTeacherID = sessionStorage.getItem("teacherId");
+    if (!storedTeacherID) {
       router.push("/"); // Redirect if no teacherID found
       return;
     }
+    setTeacherID(storedTeacherID);
+  }, [router]);
+
+  // Fetch teacher details once teacherID is available
+  useEffect(() => {
+    if (!teacherID) return;
 
     axios
       .get(`https://ai-teacher-api-xnd1.onrender.com/teacher/${teacherID}/detail`)
       .then((response) => {
         setTeacher(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching teacher details:", error);
-        setLoading(false);
-      });
-  }, [teacherID, router]);
+      })
+      .finally(() => setLoading(false));
+  }, [teacherID]);
 
   if (loading) return <p className="text-center text-gray-500">Loading teacher details...</p>;
 

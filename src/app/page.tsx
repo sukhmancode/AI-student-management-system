@@ -27,24 +27,36 @@ import { Header } from "@/frontendComponents/Navbar"
 import {  useRouter } from "next/navigation"
 
 export default function LandingPage() {
+
   const router = useRouter();
-  const teacherID = sessionStorage.getItem("teacherId");
-  if(teacherID) {
-    router.push(`/dashboard/teacher`)
-  }
-  const [activeFeature, setActiveFeature] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
+  const [teacherID, setTeacherID] = useState<string | null>(null);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Fetch teacherID only on the client side
+  useEffect(() => {
+    const storedTeacherID = sessionStorage.getItem("teacherId");
+    if (storedTeacherID) {
+      setTeacherID(storedTeacherID);
+    }
+  }, []);
+
+  // Redirect if teacherID is available
+  useEffect(() => {
+    if (teacherID) {
+      router.push(`/dashboard/teacher`);
+    }
+  }, [teacherID, router]);
 
   useEffect(() => {
-    setIsVisible(true)
+    setIsVisible(true);
 
     const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % 6)
-    }, 3000)
+      setActiveFeature((prev) => (prev + 1) % 6);
+    }, 3000);
 
-    return () => clearInterval(interval)
-  }, [])
-
+    return () => clearInterval(interval);
+  }, []);
   const features = [
     {
       icon: <Upload className="h-6 w-6" />,

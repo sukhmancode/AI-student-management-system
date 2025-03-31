@@ -19,14 +19,13 @@ export default function StudentAssignments() {
     const [students, setStudents] = useState<Student[]>([]);
     const [teacherID, setTeacherID] = useState<string | null>(null);
 
-    // Ensure `sessionStorage` is accessed only on the client side
     useEffect(() => {
         const storedTeacherID = sessionStorage.getItem("teacherId");
         setTeacherID(storedTeacherID);
     }, []);
 
     useEffect(() => {
-        if (!teacherID) return; // Prevent API call if teacherID is not available
+        if (!teacherID) return;
 
         axios.get(`https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/${teacherID}`)
             .then(response => setStudents(response.data))
