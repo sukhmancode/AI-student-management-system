@@ -17,9 +17,10 @@ interface Student {
 
 export default function StudentAssignments() {
     const [students, setStudents] = useState<Student[]>([]);
+    const teacherID = sessionStorage.getItem("teacherId");
     
     useEffect(() => {
-        axios.get(`https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/1`)
+        axios.get(`https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/${teacherID}`)
             .then(response => setStudents(response.data))
             .catch(error => console.error("Error fetching student data", error));
     }, []);
