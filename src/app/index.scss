@@ -1,0 +1,29 @@
+.main-heading {
+  color: rgb(254, 254, 254);
+}
+.button-get {
+  border: 1px solid grey;
+  background: transparent;
+  color: white;
+}
+.button-get:hover {
+  transform: scale(1.1);
+}
+.container-for-dashboard {
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container-dashboard {
+  border: 1px solid grey;
+  max-width: 700px;
+}
+@media screen and (min-width: 1024px) {
+  .container-dashboard {
+    max-width: 500px;
+  }
+  .container-for-dashboard {
+    flex-wrap: nowrap;
+  }
+}
