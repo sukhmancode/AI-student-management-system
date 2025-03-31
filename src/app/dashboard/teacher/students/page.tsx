@@ -48,8 +48,8 @@ export default function StudentAssignments() {
                                     {student.assignments.length > 0 ? (
                                         student.assignments.map((assignment, index) => (
                                             <li key={index} className="flex justify-between text-sm bg-gray-100 p-2 rounded">
-                                                <span>{assignment.title}</span>
-                                                <span className="font-bold">{assignment.grade}</span>
+                                                <span className='text-black'>{assignment.title}</span>
+                                                <span className="font-bold text-black">{assignment.grade}</span>
                                             </li>
                                         ))
                                     ) : (

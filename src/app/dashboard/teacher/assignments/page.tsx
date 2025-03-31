@@ -16,9 +16,8 @@ export default function UploadAssignment() {
   const [classId, setClassId] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false); // Ensure component runs on client
+  const [isClient, setIsClient] = useState(false); 
 
-  // Ensure the code runs only on the client
   useEffect(() => {
     setIsClient(true);
     if (typeof window !== "undefined") {
