@@ -16,25 +16,37 @@ export default function UploadAssignment() {
   const [classId, setClassId] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isClient, setIsClient] = useState(false); // Ensure component runs on client
 
+  // Ensure the code runs only on the client
   useEffect(() => {
-    const id = sessionStorage.getItem("teacherId");
-    if (!id) {
-      router.push("/");
-    } else {
-      setTeacherID(id);
+    setIsClient(true);
+    if (typeof window !== "undefined") {
+      const id = sessionStorage.getItem("teacherId");
+      if (!id) {
+        router.push("/");
+      } else {
+        setTeacherID(id);
+      }
     }
   }, [router]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
+    if (event.target.files && event.target.files.length > 0) {
       setFile(event.target.files[0]);
+    } else {
+      toast.error("Please select a file!");
     }
   };
 
   const handleUpload = async () => {
     if (!title || !dueDate || !classId || !file) {
-      alert("All fields are required!");
+      toast.error("All fields are required!");
+      return;
+    }
+
+    if (!teacherID) {
+      toast.error("Teacher ID not found!");
       return;
     }
 
@@ -43,7 +55,7 @@ export default function UploadAssignment() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("due_date", dueDate);
-    formData.append("teacher_id", teacherID!);
+    formData.append("teacher_id", teacherID);
     formData.append("class_id", classId);
     formData.append("file", file);
 
@@ -57,18 +69,22 @@ export default function UploadAssignment() {
       toast.success("Assignment uploaded successfully!");
       console.log(response.data);
       router.push("/dashboard/teacher/assignments"); // Redirect after successful upload
-    } catch (error) {
-      toast.error("Error uploading assignment.");
-      console.error(error);
+    } catch (error: any) {
+      const errorMessage =
+        error.response?.data?.message || "Error uploading assignment.";
+      toast.error(errorMessage);
+      console.error("Upload error:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  if (!isClient) return null; // Prevents hydration errors
+
   if (!teacherID) return <p className="text-center text-gray-500">Loading...</p>;
 
   return (
-    <div className="flex justify-center items-center self-center">
+    <div className="flex justify-center items-center h-screen">
       <Card className="w-96 shadow-lg border border-gray-200 p-4">
         <CardHeader>
           <CardTitle className="text-lg">Upload Assignment</CardTitle>
