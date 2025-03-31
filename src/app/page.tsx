@@ -105,7 +105,7 @@ export default function LandingPage() {
       </div>
 
       <Header />
-      <main className="flex-1">
+      <main className="parent-container">
         {/* Hero Section */}
         <section
           className=" 
