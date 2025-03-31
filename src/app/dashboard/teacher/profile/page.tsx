@@ -19,7 +19,7 @@ export default function TeacherDetail() {
 
   useEffect(() => {
     if (!teacherID) {
-      router.push("/login"); // Redirect if no teacherID found
+      router.push("/"); // Redirect if no teacherID found
       return;
     }
 
