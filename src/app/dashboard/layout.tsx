@@ -67,7 +67,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                                 <DropdownMenuItem asChild>
                                     <Link href="/dashboard/settings">Settings</Link>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => {
+                                    "use client";
+                                    sessionStorage.removeItem("teacherId")
+                                }}>
                                     Logout {/* Add logout functionality here */}
                                 </DropdownMenuItem>
                             </DropdownMenuContent>

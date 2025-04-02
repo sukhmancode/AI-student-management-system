@@ -25,6 +25,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeacherLogin } from "./TeacherLogin";
 import "./index.scss";
+import { StudentLogin } from "./StudentLogin";
 
 export function Header() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -140,18 +141,18 @@ hover:text-white  text-white hover:bg-transparent  transition-all duration-200 l
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogTitle>LogIn</DialogTitle>
                 <DialogDescription>
                   <Tabs defaultValue="account" className="w-[400px]">
                     <TabsList>
                       <TabsTrigger value="Teacher">Teacher</TabsTrigger>
-                      <TabsTrigger value="password">Password</TabsTrigger>
+                      <TabsTrigger value="student">Student</TabsTrigger>
                     </TabsList>
                     <TabsContent value="Teacher">
                       <TeacherLogin />
                     </TabsContent>
-                    <TabsContent value="password">
-                      Change your password here.
+                    <TabsContent value="student">
+                      <StudentLogin/>
                     </TabsContent>
                   </Tabs>
                 </DialogDescription>
