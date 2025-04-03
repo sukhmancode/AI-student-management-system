@@ -7,11 +7,10 @@
 .main-heading {
   color: rgb(254, 254, 254);
 }
-.button-get {
-  border: 1px solid grey;
-  background: transparent;
-  color: white;
+.main-heading.light {
+  color:black;
 }
+
 .button-get:hover {
   transform: scale(1.1);
 }

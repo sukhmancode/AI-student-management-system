@@ -40,16 +40,16 @@ export function TeacherLogin() {
     <div className="flex w-full">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-6 rounded-lg shadow-lg w-full"
+        className="bg-secondary p-6 rounded-lg shadow-lg w-full"
       >
-        <h2 className="text-xl font-bold mb-4">Teacher Login</h2>
+        <h2 className="text-2xl text-center text-white font-bold mb-4">Teacher Login</h2>
         {error && <p className="text-red-500">{error}</p>}
         <Input
           type="number"
           placeholder="Teacher Id"
           value={id}
           onChange={(e) => setId(e.target.value)}
-          className="border p-2 w-full mb-2"
+          className="border p-2 w-full mb-2 text-white"
           required
         />
         <Input
@@ -57,7 +57,7 @@ export function TeacherLogin() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full mb-4"
+          className="border p-2 w-full mb-4 text-white"
           required
         />
         <Button type="submit">Login</Button>
