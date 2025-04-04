@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { TeacherLogin } from "./TeacherLogin";
 import { StudentLogin } from "./StudentLogin";
+import { CollegeLogin } from "./CollegeLogin";
 
 interface LoginDialogProps {
   buttonLabel: string;
@@ -44,7 +45,7 @@ export function LoginDialog({ buttonLabel, buttonClassName = "" }: LoginDialogPr
                 <StudentLogin />
               </TabsContent>
               <TabsContent value="College">
-                <p className="text-2xl text-center text-white">COMING SOON!</p>
+                <CollegeLogin/>
               </TabsContent>
             </Tabs>
           </DialogDescription>

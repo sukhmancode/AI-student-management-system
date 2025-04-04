@@ -62,7 +62,7 @@ export function TeacherLogin() {
           className="border p-2 w-full mb-4 text-white"
           required
         />
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="w-full">
         {loading ? "Logging in..." : "Login"}
         </Button>
       </form>

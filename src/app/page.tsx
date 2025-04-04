@@ -622,7 +622,7 @@ export default function LandingPage() {
                     Stay Updated
                   </div>
                   <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                    Subscribe to Our Newsletter
+                    Send Us your Email.
                   </h2>
                   <p className="max-w-[600px] text-slate-600 dark:text-slate-300 md:text-xl">
                     Get the latest updates, tips for better assignment
