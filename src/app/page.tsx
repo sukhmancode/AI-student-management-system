@@ -113,8 +113,8 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section
           className=" 
-
- py-12 md:py-24 lg:py-32 overflow-hidden"
+justify-center items-center self-center
+ py-12 md:py-24 lg:py-32 overflow-hidden min-h-screen"
         >
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
@@ -622,7 +622,7 @@ export default function LandingPage() {
                     Stay Updated
                   </div>
                   <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
-                    Subscribe to Our Newsletter
+                    Send Us your Email.
                   </h2>
                   <p className="max-w-[600px] text-slate-600 dark:text-slate-300 md:text-xl">
                     Get the latest updates, tips for better assignment

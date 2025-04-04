@@ -4,11 +4,11 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function StudentLogin() {
+export function CollegeLogin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // new state
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ export function StudentLogin() {
 
     try {
       const response = await axios.post(
-        "https://ai-teacher-api-xnd1.onrender.com/student/login/",
+        "https://ai-teacher-api-xnd1.onrender.com/college/login/",
         {
           id,
           password,
@@ -25,9 +25,9 @@ export function StudentLogin() {
       );
 
       if (response.data.Message === "Success Login") {
-        sessionStorage.setItem("studentId", response.data.ID);
-        toast.success("Login Successful");
-        window.location.href = "/dashboard/student";
+        sessionStorage.setItem("collegeId", response.data.ID);
+        toast.success("College Login Successful");
+        window.location.href = "/dashboard/college"; 
       } else {
         toast.error("Please check your credentials");
       }
@@ -44,11 +44,11 @@ export function StudentLogin() {
         onSubmit={handleLogin}
         className="bg-secondary p-6 rounded-lg shadow-lg w-full"
       >
-        <h2 className="text-2xl text-center text-white font-bold mb-4">Student Login</h2>
+        <h2 className="text-2xl text-center text-white font-bold mb-4">College Login</h2>
         {error && <p className="text-red-500 mb-2">{error}</p>}
         <Input
           type="number"
-          placeholder="Student Id"
+          placeholder="College Id"
           value={id}
           onChange={(e) => setId(e.target.value)}
           className="mb-2"
