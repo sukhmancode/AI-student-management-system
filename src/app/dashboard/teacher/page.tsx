@@ -4,6 +4,7 @@ import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Class {
   id: number;
@@ -25,6 +26,7 @@ interface Student {
 }
 
 export default function Classes() {
+  const router = useRouter();
   const [classes, setClasses] = useState<Class[]>([]);
   const [teacherID, setTeacherID] = useState<string | null>(null);
   const [teacherName, setTeacherName] = useState<string | null>(null);
@@ -38,8 +40,9 @@ export default function Classes() {
   }, []);
 
   useEffect(() => {
-    if (!teacherID) return;
-
+    if (!teacherID) {
+      return;
+    }
     // Fetch teacher details
     axios
       .get(`https://ai-teacher-api-xnd1.onrender.com/teacher/${teacherID}/detail`)
