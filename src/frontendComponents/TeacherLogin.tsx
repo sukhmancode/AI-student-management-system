@@ -9,6 +9,8 @@ export function TeacherLogin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // new state
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +62,9 @@ export function TeacherLogin() {
           className="border p-2 w-full mb-4 text-white"
           required
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+        </Button>
       </form>
     </div>
   );

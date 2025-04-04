@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ['latin'] })
+
 export const metadata = {
   title: "EduFlow - Colorful Assignment Management",
   description:
@@ -18,12 +19,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <html lang="en" suppressHydrationWarning className="dark">
+      <body className={`${inter.className} `} >
+      <ThemeProvider defaultTheme="dark" themes={["dark"]} forcedTheme="dark" disableTransitionOnChange={false}> 
           {children}
         </ThemeProvider>
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   )

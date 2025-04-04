@@ -125,14 +125,17 @@ export default function LandingPage() {
                 className="flex flex-col justify-center space-y-4"
               >
                 <div className="space-y-2">
-                  <div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-600 dark:border-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
+                  <div className="inline-flex items-center rounded-full border light:text-black-700 border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-600 dark:border-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
                     <Sparkles className="mr-1 h-3.5 w-3.5" />
                     <span>Revolutionizing Education</span>
                   </div>
-                  <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent main-heading">
-                    Make Assignment Management Fun & Easy
-                  </h1>
-                  <p className="max-w-[600px] text-slate-600 dark:text-slate-300 md:text-xl">
+                  <h1 className="text-4xl sm:text-5xl xl:text-6xl/none font-bold tracking-tighter
+                  text-black 
+              dark:text-white">
+  Make Assignment Management Fun & Easy
+</h1>
+
+                  <p className="max-w-[500px] text-slate-600 dark:text-slate-300 md:text-xl">
                     A colorful, interactive platform where students submit
                     assignments and teachers provide feedback, all in one
                     delightful space.
@@ -162,7 +165,7 @@ export default function LandingPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 opacity-50"></div>
                   <Image
                     src="/placeholder.svg?height=350&width=500"
-                    width={500}
+                    width={600}
                     height={350}
                     alt="Assignment portal dashboard preview"
                     className="rounded-lg object-cover relative z-10"

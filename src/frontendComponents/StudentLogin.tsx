@@ -8,10 +8,12 @@ export function StudentLogin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // new state
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -31,6 +33,8 @@ export function StudentLogin() {
       }
     } catch (err) {
       setError("Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,13 +45,13 @@ export function StudentLogin() {
         className="bg-secondary p-6 rounded-lg shadow-lg w-full"
       >
         <h2 className="text-2xl text-center text-white font-bold mb-4">Student Login</h2>
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p className="text-red-500 mb-2">{error}</p>}
         <Input
           type="number"
           placeholder="Student Id"
           value={id}
           onChange={(e) => setId(e.target.value)}
-          className="border p-2 w-full mb-2"
+          className="mb-2"
           required
         />
         <Input
@@ -55,10 +59,12 @@ export function StudentLogin() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border p-2 w-full mb-4"
+          className="mb-4"
           required
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit" disabled={loading} className="w-full">
+          {loading ? "Logging in..." : "Login"}
+        </Button>
       </form>
     </div>
   );
