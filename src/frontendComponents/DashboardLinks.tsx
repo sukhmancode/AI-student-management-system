@@ -24,8 +24,8 @@ interface NavProps {
 export const studentLinks: NavProps[] = [
   {
     id: 0,
-    name: "Submit Assignment",
-    href: "/dashboard/student/assignmentsubmit",
+    name: "View Submissions",
+    href: "/dashboard/student/submissions",
     icon: FilePlus, // 📝 Submission Icon
   },
   {

@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
-  title: "AssignmentHub - Colorful Assignment Management",
+  title: "EduFlow - Colorful Assignment Management",
   description:
     "A vibrant, interactive platform where students can submit assignments and teachers can provide feedback, all in one delightful space.",
 }

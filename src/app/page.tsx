@@ -609,7 +609,7 @@ export default function LandingPage() {
               {[
                 {
                   quote:
-                    "AssignmentHub has completely transformed how I manage my classroom. Grading is faster, feedback is more detailed, and students are more engaged.",
+                    "EduFlow has completely transformed how I manage my classroom. Grading is faster, feedback is more detailed, and students are more engaged.",
                   name: "Dr. Sarah Johnson",
                   role: "High School Science Teacher",
                   stars: 5,
@@ -785,7 +785,7 @@ export default function LandingPage() {
                   <BookOpen className="h-5 w-5 text-white" />
                 </div>
                 <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
-                  AssignmentHub
+                  EduFlow
                 </span>
               </div>
               <p className="text-slate-500 dark:text-slate-400">

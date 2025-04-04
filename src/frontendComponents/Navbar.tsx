@@ -101,7 +101,7 @@ export function Header() {
             <BookOpen className="h-5 w-5 text-white" />
           </div>
           <span className="text-xl font-bold bg-clip-text text-transparent text-white  ">
-            AssignmentHub
+          EduFlow
           </span>
         </motion.div>
         <nav className="hidden md:flex items-center gap-6">
