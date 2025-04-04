@@ -5,6 +5,10 @@ export interface LinkArray {
 
 export const SideBarData: LinkArray[] = [
   {
+    href: "/dashboard/college/",
+    value: "Home",
+  },
+  {
     href: "/dashboard/college/addteacher",
     value: "Add Teacher",
   },
