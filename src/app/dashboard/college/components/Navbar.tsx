@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -45,6 +46,9 @@ export default function Navbar() {
                 onClick={() => {
                   "use client";
                   sessionStorage.removeItem("teacherId");
+                  sessionStorage.removeItem("collegeId");
+                  sessionStorage.removeItem("studentId");
+                  window.location.href="/"
                 }}
               >
                 Logout {/* Add logout functionality here */}

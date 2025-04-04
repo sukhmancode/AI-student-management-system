@@ -86,7 +86,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     "use client";
                     sessionStorage.removeItem("teacherId");
                     sessionStorage.removeItem("studentId");
-                    router.push("/")
+                    sessionStorage.removeItem("collegeId")
+                    window.location.href="/"
                   }}
                 >
                   Logout {/* Add logout functionality here */}

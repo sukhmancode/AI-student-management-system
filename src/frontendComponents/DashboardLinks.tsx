@@ -9,6 +9,7 @@ import {
   Users,
   GraduationCap,
   LucideProps,
+  LayoutDashboardIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,6 +23,12 @@ interface NavProps {
 
 // Student Links
 export const studentLinks: NavProps[] = [
+  {
+    id: 4,
+    name: "Home",
+    href: "/dashboard/student",
+    icon: LayoutDashboardIcon
+  },
   {
     id: 0,
     name: "View Submissions",
@@ -44,6 +51,12 @@ export const studentLinks: NavProps[] = [
 
 // Teacher Links
 export const teacherLinks: NavProps[] = [
+  {
+    id: 4,
+    name: "Home",
+    href: "/dashboard/teacher",
+    icon: LayoutDashboardIcon
+  },
   {
     id: 0,
     name: "Upload Assignments",
