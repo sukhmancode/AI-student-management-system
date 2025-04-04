@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-interface Student {
+interface Assignment {
   id: number;
   title: string;
   cloudinary_url: string;
@@ -13,64 +15,79 @@ interface Student {
   Cname: string;
 }
 
-export default function Student() {
-
-    
+export default function StudentAssignments() {
   const router = useRouter();
-  const [students, setStudents] = useState<Student[]>([]);  // Changed to array of students
-  const [loading, setLoading] = useState(true);
-  const [StudentId, setStudentId] = useState<string | null>(null);
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [studentId, setStudentId] = useState<string | null>(null);
+  const [files, setFiles] = useState<{ [id: number]: File | null }>({});
+  const [status, setStatus] = useState<{ [id: number]: string | null }>({});
 
   useEffect(() => {
-    const storedStudentId = sessionStorage.getItem("studentId");
-    if (!storedStudentId) {
-      router.push("/"); // Redirect if no StudentId found
-      return;
-    }
-    setStudentId(storedStudentId);
+    const id = sessionStorage.getItem("studentId");
+    if (!id) return router.push("/"); // Redirect if studentId not found
+    setStudentId(id);
+
+    axios.get(`https://ai-teacher-api-xnd1.onrender.com/student/assignments/${id}`)
+      .then(({ data }) => setAssignments(data))
+      .catch(() => setStatus({ 0: "Error fetching assignments." }));
   }, [router]);
 
-  // Fetch student details once StudentId is available
-  useEffect(() => {
-    if (!StudentId) return;
+  const handleFileChange = (assignmentId: number, file: File | null) => {
+    setFiles((prev) => ({ ...prev, [assignmentId]: file }));
+  };
 
-    axios
-      .get(`https://ai-teacher-api-xnd1.onrender.com/student/assignments/${StudentId}`)
-      .then((response) => {
-        setStudents(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching student details:", error);
-      })
-      .finally(() => setLoading(false));
-  }, [StudentId]);
+  const handleSubmit = async (assignmentId: number) => {
+    if (!files[assignmentId] || !studentId) {
+      return setStatus((prev) => ({ ...prev, [assignmentId]: "Please select a file." }));
+    }
 
-  if (loading) return <p className="text-center text-gray-500">Loading student details...</p>;
+    const formData = new FormData();
+    formData.append("assignment_id", assignmentId.toString());
+    formData.append("student_id", studentId);
+    formData.append("file", files[assignmentId] as File);
+
+    setStatus((prev) => ({ ...prev, [assignmentId]: "Submitting..." }));
+
+    try {
+      await axios.post("https://ai-teacher-api-xnd1.onrender.com/student/submit_assignment/", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setStatus((prev) => ({ ...prev, [assignmentId]: "Submitted successfully!" }));
+    } catch {
+      setStatus((prev) => ({ ...prev, [assignmentId]: "Submission failed." }));
+    }
+  };
+
+  if (!assignments.length) return <p className="text-center text-gray-500">Loading assignments...</p>;
 
   return (
-    <div className="flex justify-center items-center  ">
+    <div className="flex justify-center items-center">
       <div className="space-y-4">
-        {students.length > 0 ? (
-          students.map((student) => (
-            
-            <Card key={student.id} className="w-96 shadow-lg border border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-xl">Student Details</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <p><strong>Name:</strong> {student.title}</p>
-                  <p><strong>Student ID:</strong> {student.id}</p>
-                  <p className="text-red-500"><strong>Assignment URL:</strong> <a href={student.cloudinary_url} target="_blank" rel="noopener noreferrer">View</a></p>
-                  <p><strong>Due Date:</strong> {student.due_date.split('T00:00:00')}</p>
-                  <p><strong>Class Name:</strong> {student.Cname}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <p className="text-red-500">No student details found.</p>
-        )}
+        {assignments.map((assignment) => (
+          <Card key={assignment.id} className="w-96 shadow-lg border border-gray-200">
+            <CardHeader>
+              <CardTitle className="text-xl">{assignment.title}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <p><strong>Assignment ID:</strong> {assignment.id}</p>
+              <p><strong>Class:</strong> {assignment.Cname}</p>
+              <p><strong>Due Date:</strong> {assignment.due_date.split("T")[0]}</p>
+              <p>
+                <strong>File:</strong>{" "}
+                <a href={assignment.cloudinary_url} target="_blank" className="text-blue-500">
+                  View
+                </a>
+              </p>
+
+              <Input type="file" onChange={(e) => handleFileChange(assignment.id, e.target.files?.[0] || null)} />
+              <Button onClick={() => handleSubmit(assignment.id)} disabled={status[assignment.id] === "Submitting..."}>
+                {status[assignment.id] === "Submitting..." ? "Submitting..." : "Submit"}
+              </Button>
+
+              {status[assignment.id] && <p className="text-blue-500">{status[assignment.id]}</p>}
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );
