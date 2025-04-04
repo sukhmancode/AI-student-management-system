@@ -12,6 +12,16 @@
   color: rgb(217, 217, 217);
 }
 .card-number {
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+.view-details {
+  all: unset;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: white;
+  color: black;
+  margin-top: 15px;
+  cursor: pointer;
 }

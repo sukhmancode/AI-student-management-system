@@ -63,19 +63,19 @@ export default function page() {
             <Navbar />
           </div>
           <div className="college-details-container">
-            <h2 className="welcome-message font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600 mt-2">
-              Welcome {collegeName}
-            </h2>
+            <h2 className="welcome-message ">Welcome, {collegeName}</h2>
             <div className="cards">
               <Card
                 secondaryHeading="Total Number of Students "
                 number={classes}
                 secondary=" Classes"
+                href={"/view-students"}
               />
               <Card
                 secondaryHeading="Total Number of Teachers "
                 number={teachers}
                 secondary=" Teachers"
+                href={"/view-teachers"}
               />
             </div>
           </div>
