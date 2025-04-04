@@ -50,7 +50,9 @@ export default function page() {
   useEffect(() => {
     const collegeId = sessionStorage.getItem("collegeId");
     setCollegeId(collegeId);
-    handleCollegeDetails(collegeId || "2315");
+    if (collegeId) {
+      handleCollegeDetails(collegeId);
+    }
   }, []);
   return (
     <>
@@ -69,13 +71,13 @@ export default function page() {
                 secondaryHeading="Total Number of Students "
                 number={classes}
                 secondary=" Classes"
-                href={"/view-students"}
+                href={"/viewstudents"}
               />
               <Card
                 secondaryHeading="Total Number of Teachers "
                 number={teachers}
                 secondary=" Teachers"
-                href={"/view-teachers"}
+                href={"/viewteachers"}
               />
             </div>
           </div>

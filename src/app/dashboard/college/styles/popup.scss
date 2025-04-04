@@ -1,0 +1,32 @@
+.popup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(35, 35, 35, 0.512);
+  z-index: 9999;
+}
+.popup-content-container {
+  max-width: 700px;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 10px;
+  background: rgb(64, 64, 64);
+  padding: 10px;
+}
+.heading {
+  font-size: 1.2rem;
+  color: rgb(220, 220, 220);
+}
+.teacher-detail {
+  color: white;
+  font-size: 1.5rem;
+}
+.cross-popup {
+  position: relative;
+  top: inherit;
+  right: 10px;
+}

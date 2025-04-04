@@ -6,7 +6,7 @@ interface Props {
   secondaryHeading?: string;
   number?: number | string;
   secondary?: string;
-  href: string;
+  href?: string;
 }
 export default function Card({
   secondaryHeading,
@@ -22,9 +22,13 @@ export default function Card({
           <span>{number}</span>
           <span>{secondary}</span>
         </p>
-        <Link href={href}>
-          <button className="view-details"> View Details </button>
-        </Link>
+        {href ? (
+          <Link href={href}>
+            <button className="view-details"> View Details </button>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
