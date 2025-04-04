@@ -4,15 +4,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   BookOpen,
   CheckCircle,
@@ -22,10 +13,8 @@ import {
   Upload,
   Users,
 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TeacherLogin } from "./TeacherLogin";
+
 import "./index.scss";
-import { StudentLogin } from "./StudentLogin";
 import { LoginDialog } from "./LoginPopup";
 
 export function Header() {

@@ -9,6 +9,8 @@ interface Teacher {
   Tname: string;
   id: number;
   college_id: number;
+  Tcontact:string;
+  Temail:string;
 }
 
 export default function TeacherDetail() {
@@ -46,7 +48,7 @@ export default function TeacherDetail() {
 
   return (
     <div className="flex justify-center items-center ">
-      <Card className="w-96 shadow-lg border border-gray-200">
+      <Card className="w-96 shadow-lg border border-gray-200 bg-[##404040]">
         <CardHeader>
           <CardTitle className="text-xl">Teacher Details</CardTitle>
         </CardHeader>
@@ -56,6 +58,8 @@ export default function TeacherDetail() {
               <p><strong>Name:</strong> {teacher.Tname}</p>
               <p><strong>Teacher ID:</strong> {teacher.id}</p>
               <p><strong>College ID:</strong> {teacher.college_id}</p>
+              <p><strong>Email:</strong> {teacher.Temail}</p>
+              <p><strong>Contact:</strong> {teacher.Tcontact}</p>
             </div>
           ) : (
             <p className="text-red-500">Teacher details not found.</p>

@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     : "student";
 
   return (
-    <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="min-h-screen w-full grid md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] dark">
       {/* Sidebar */}
       <div className="hidden md:block border-r bg-muted/40">
         <div className="flex h-full max-h-screen flex-col gap-2">

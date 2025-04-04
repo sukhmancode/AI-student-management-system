@@ -124,7 +124,7 @@ export default function LandingPage() {
                 transition={{ duration: 0.7 }}
                 className="flex flex-col justify-center space-y-4"
               >
-                <div className="space-y-2">
+                <div className="space-y-2 p-2">
                   <div className="inline-flex items-center rounded-full border light:text-black-700 border-indigo-200 bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-600 dark:border-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
                     <Sparkles className="mr-1 h-3.5 w-3.5" />
                     <span>Revolutionizing Education</span>
@@ -135,7 +135,7 @@ export default function LandingPage() {
   Make Assignment Management Fun & Easy
 </h1>
 
-                  <p className="max-w-[500px] text-slate-600 dark:text-slate-300 md:text-xl">
+                  <p className=" max-w-[600px] text-slate-600 dark:text-slate-300 md:text-xl">
                     A colorful, interactive platform where students submit
                     assignments and teachers provide feedback, all in one
                     delightful space.
@@ -158,15 +158,15 @@ export default function LandingPage() {
                 className="flex items-center justify-center"
               >
                 <div
-                  className="relative h-[350px]  
+                  className="relative  
 
  overflow-hidden rounded-xl border bg-white dark:bg-gray-900 p-2 shadow-2xl"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 opacity-50"></div>
                   <Image
-                    src="/placeholder.svg?height=350&width=500"
+                    src="/teacherDash.png"
                     width={600}
-                    height={350}
+                    height={550}
                     alt="Assignment portal dashboard preview"
                     className="rounded-lg object-cover relative z-10"
                   />
@@ -181,104 +181,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Interactive Features Section */}
-        <section
-          id="features"
-          className=" 
-
- py-12 md:py-24"
-        >
-          <div className="container px-4 md:px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-center justify-center space-y-4 text-center"
-            >
-              <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-indigo-100 dark:bg-indigo-950 px-3 py-1 text-sm font-medium text-indigo-600 dark:text-indigo-300">
-                  Interactive Features
-                </div>
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl  ">
-                  Discover Amazing Tools
-                </h2>
-                <p className="max-w-[700px] text-slate-600 dark:text-slate-300 md:text-xl">
-                  Our platform provides powerful tools for both students and
-                  teachers to make learning more engaging.
-                </p>
-              </div>
-            </motion.div>
-
-            <div className="mt-12 relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950 rounded-xl opacity-50"></div>
-              <div className="relative z-10 p-6 rounded-xl overflow-hidden">
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  {features.map((feature, index) => (
-                    <motion.button
-                      key={feature.title}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className={`p-4 rounded-lg text-left transition-all duration-200 ${
-                        activeFeature === index
-                          ? "bg-white dark:bg-gray-800 shadow-lg"
-                          : "bg-transparent hover:bg-white/50 dark:hover:bg-gray-800/50"
-                      }`}
-                      onClick={() => setActiveFeature(index)}
-                    >
-                      <div
-                        className={`rounded-full w-10 h-10 flex items-center justify-center mb-3 ${
-                          activeFeature === index
-                            ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white"
-                            : "bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300"
-                        }`}
-                      >
-                        {feature.icon}
-                      </div>
-                      <h3 className="font-semibold text-lg">{feature.title}</h3>
-                    </motion.button>
-                  ))}
-                </div>
-
-                <motion.div
-                  key={activeFeature}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg"
-                >
-                  <div className="grid md:grid-cols-2 gap-6 items-center">
-                    <div>
-                      <div className="rounded-full w-16 h-16 flex items-center justify-center mb-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
-                        {features[activeFeature].icon}
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3">
-                        {features[activeFeature].title}
-                      </h3>
-                      <p className="text-slate-600 dark:text-slate-300 text-lg">
-                        {features[activeFeature].description}
-                      </p>
-                      <Button className="mt-6 button-get">Learn More</Button>
-                    </div>
-                    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950 p-4 rounded-xl">
-                      <Image
-                        src="/placeholder.svg?height=250&width=400"
-                        width={400}
-                        height={250}
-                        alt={`${features[activeFeature].title} feature preview`}
-                        className="rounded-lg object-cover  
-
-"
-                      />
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* How It Works Section */}
         <section
@@ -496,7 +398,7 @@ export default function LandingPage() {
                       </div>
                     </div>
                     <Image
-                      src="/placeholder.svg?height=300&width=500"
+                      src="/studentDash.png"
                       width={500}
                       height={300}
                       alt="Student dashboard interface"
@@ -545,7 +447,7 @@ export default function LandingPage() {
                       </div>
                     </div>
                     <Image
-                      src="/placeholder.svg?height=300&width=500"
+                      src="/teacherDash.png"
                       width={500}
                       height={300}
                       alt="Teacher dashboard interface"
