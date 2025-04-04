@@ -14,9 +14,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DashboardLinks } from "@/frontendComponents/DashboardLinks";
-
+import { useRouter } from "next/navigation";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   // ✅ Determine role based on URL
   const role: "student" | "teacher" = pathname.includes("/teacher")
@@ -84,6 +85,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   onClick={() => {
                     "use client";
                     sessionStorage.removeItem("teacherId");
+                    sessionStorage.removeItem("studentId");
+                    router.push("/")
                   }}
                 >
                   Logout {/* Add logout functionality here */}
