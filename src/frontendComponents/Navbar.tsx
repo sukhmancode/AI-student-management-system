@@ -26,6 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TeacherLogin } from "./TeacherLogin";
 import "./index.scss";
 import { StudentLogin } from "./StudentLogin";
+import { LoginDialog } from "./LoginPopup";
 
 export function Header() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,12 +82,6 @@ export function Header() {
     },
   ];
 
-  const counters = [
-    { value: 10000, label: "Students" },
-    { value: 500, label: "Schools" },
-    { value: 2500, label: "Teachers" },
-    { value: 1000000, label: "Assignments" },
-  ];
 
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-white/70 dark:bg-gray-950/70 border-b border-slate-200 dark:border-slate-800 ">
@@ -105,7 +100,7 @@ export function Header() {
           </span>
         </motion.div>
         <nav className="hidden md:flex items-center gap-6">
-          {["Features", "How It Works", "Testimonials", "Pricing"].map(
+          {["Features", "How It Works", "Testimonials"].map(
             (item, i) => (
               <motion.div
                 key={item}
@@ -130,40 +125,7 @@ export function Header() {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-4"
         >
-          <Dialog>
-            <DialogTrigger>
-              <Button
-                className="bg-transparent border-2 border-grey
-hover:text-white  text-white hover:bg-transparent  transition-all duration-200 loginbutton"
-              >
-                Log in
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="flex justify-center items-center">
-              <DialogHeader className="w-full">
-                <DialogTitle className="text-center mb-2 text-2xl">Log In</DialogTitle>
-                <DialogDescription className="flex flex-col items-center">
-                  <Tabs defaultValue="account" className="w-[100%] max-w-[400px]">
-                    <TabsList className="flex justify-center w-full mb-4">
-                      <TabsTrigger value="Teacher">Teacher</TabsTrigger>
-                      <TabsTrigger value="student">Student</TabsTrigger>
-                      <TabsTrigger value="College">College</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="Teacher">
-                      <TeacherLogin />
-                    </TabsContent>
-                    <TabsContent value="student">
-                      <StudentLogin />
-                    </TabsContent>
-                    <TabsContent value="College">
-                      <p className="text-2xl items-center text-center text-white">COMING SOON! </p>
-                    </TabsContent>
-                  </Tabs>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-
-          </Dialog>
+         <LoginDialog buttonLabel="Log in" buttonClassName="w-full"/>
         </motion.div>
       </div>
     </header>

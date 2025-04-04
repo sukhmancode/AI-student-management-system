@@ -27,6 +27,10 @@ import {
 import { Header } from "@/frontendComponents/Navbar";
 import { useRouter } from "next/navigation";
 import "./index.scss";
+import { TeacherLogin } from "@/frontendComponents/TeacherLogin";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { StudentLogin } from "@/frontendComponents/StudentLogin";
+import { LoginDialog } from "@/frontendComponents/LoginPopup";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -140,12 +144,8 @@ export default function LandingPage() {
                   transition={{ duration: 0.7, delay: 0.2 }}
                   className="flex flex-col gap-2 min-[400px]:flex-row"
                 >
-                  <Button
-                    size="lg"
-                    className="gap-1.5 button-get transition-all duration-200"
-                  >
-                    Get Started <ChevronRight className="h-4 w-4" />
-                  </Button>
+                 <LoginDialog buttonLabel="Get Started" buttonClassName=""/>
+                
                 </motion.div>
               </motion.div>
               <motion.div
@@ -443,10 +443,8 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Interface Preview Section */}
         <section
           className=" 
-
  py-12 md:py-24 overflow-hidden"
         >
           <div className="container px-4 md:px-6">
@@ -507,7 +505,7 @@ export default function LandingPage() {
                     in a colorful, organized dashboard.
                   </p>
                   <div className="mt-4 flex gap-2">
-                    {["Assignments", "Calendar", "Grades", "Messages"].map(
+                    {["Assignments", "Grades", "Messages"].map(
                       (item, i) => (
                         <span
                           key={item}
@@ -558,7 +556,6 @@ export default function LandingPage() {
                   <div className="mt-4 flex gap-2">
                     {[
                       "Grading",
-                      "Analytics",
                       "Class Management",
                       "Feedback",
                     ].map((item, i) => (
@@ -576,7 +573,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
         <section
           id="testimonials"
           className=" 
@@ -694,19 +690,8 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button
-                  size="lg"
-                  className="bg-white text-indigo-600 hover:bg-indigo-50 gap-1.5"
-                >
-                  Get Started for Free <ArrowRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white/10"
-                >
-                  Schedule a Demo
-                </Button>
+                <LoginDialog buttonLabel="Get Started for Free" buttonClassName="bg-white text-indigo-600 hover:bg-indigo-50 gap-1.5" />
+              
               </div>
             </motion.div>
           </div>
@@ -780,40 +765,23 @@ export default function LandingPage() {
         <div className="container px-4 py-12 md:px-6">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600">
+              <div className="flex items-center justify-center gap-2 w-full self-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 self-center">
                   <BookOpen className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
+                <span className="text-xl  font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">
                   EduFlow
                 </span>
               </div>
-              <p className="text-slate-500 dark:text-slate-400">
+              <p className="text-slate-500 dark:text-slate-400 text-center">
                 Simplifying assignment management for students and teachers
                 worldwide.
               </p>
-              <div className="flex space-x-4">
-                {["twitter", "facebook", "instagram", "github"].map(
-                  (social) => (
-                    <Link
-                      key={social}
-                      href="#"
-                      className="text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
-                    >
-                      <span className="sr-only">{social}</span>
-                      <div className="h-6 w-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
-                        <span className="text-xs">
-                          {social.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                    </Link>
-                  )
-                )}
-              </div>
+      
             </div>
           </div>
-          <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+          <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center w-full">
+            <p className="text-sm text-slate-500 dark:text-slate-400 justify-center flex self-center w-full">
               &copy; {new Date().getFullYear()} AssignmentHub. All rights
               reserved.
             </p>
