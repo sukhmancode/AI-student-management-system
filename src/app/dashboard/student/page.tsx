@@ -148,85 +148,90 @@ export default function StudentAssignments() {
   if (!assignments.length)
     return <p className="text-center text-gray-500">Loading assignments...</p>;
 
-  return (
-    <div className="flex justify-center items-center">
-      <div className="space-y-4">
-        {assignments.map((assignment) => {
-          const isSubmitted = assignment.is_submitted || submittedMap[assignment.id];
-          const submId = submittedMap[assignment.id];
-          const feedback = feedbacks[submId];
-
-          return (
-            <Card
-              key={assignment.id}
-              className="w-96 shadow-lg border border-gray-200"
-            >
-              <CardHeader>
-                <CardTitle className="text-xl">{assignment.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <p>
-                  <strong>Assignment ID:</strong> {assignment.id}
-                </p>
-                <p>
-                  <strong>Class:</strong> {assignment.Cname}
-                </p>
-                <p>
-                  <strong>Due Date:</strong>{" "}
-                  {assignment.due_date.split("T")[0]}
-                </p>
-                <p>
-                  <strong>File:</strong>{" "}
-                  <a
-                    href={assignment.cloudinary_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500"
-                  >
-                    View
-                  </a>
-                </p>
-
-                {!isSubmitted ? (
-                  <>
-                    <Input
-                      type="file"
-                      onChange={(e) =>
-                        handleFileChange(
-                          assignment.id,
-                          e.target.files?.[0] || null
-                        )
-                      }
-                    />
-                    <Button
-                      onClick={() => handleSubmit(assignment.id)}
-                      disabled={status[assignment.id] === "Submitting..."}
+    return (
+      <div className="flex justify-center items-center px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-screen-xl">
+          {assignments.map((assignment) => {
+            const isSubmitted = assignment.is_submitted || submittedMap[assignment.id];
+            const submId = submittedMap[assignment.id];
+            const feedback = feedbacks[submId];
+    
+            return (
+              <Card
+                key={assignment.id}
+                className="w-full shadow-lg border border-gray-200"
+              >
+                <CardHeader>
+                  <CardTitle className="text-xl">{assignment.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <p>
+                    <strong>Assignment ID:</strong> {assignment.id}
+                  </p>
+                  <p>
+                    <strong>Class:</strong> {assignment.Cname}
+                  </p>
+                  <p>
+                    <strong>Due Date:</strong>{" "}
+                    {assignment.due_date.split("T")[0]}
+                  </p>
+                  <p>
+                    <strong>File:</strong>{" "}
+                    <a
+                      href={assignment.cloudinary_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500"
                     >
-                      {status[assignment.id] === "Submitting..."
-                        ? "Submitting..."
-                        : "Submit"}
-                    </Button>
-                  </>
-                ) : (
-                  <p className="text-green-600">Assignment already submitted.</p>
-                )}
-
-                {status[assignment.id] && (
-                  <p className="text-blue-500">{status[assignment.id]}</p>
-                )}
-
-                
+                      View
+                    </a>
+                  </p>
+    
+                  {!isSubmitted ? (
+                    <>
+                      <Input
+                        type="file"
+                        onChange={(e) =>
+                          handleFileChange(
+                            assignment.id,
+                            e.target.files?.[0] || null
+                          )
+                        }
+                      />
+                      <Button
+                        onClick={() => handleSubmit(assignment.id)}
+                        disabled={status[assignment.id] === "Submitting..."}
+                      >
+                        {status[assignment.id] === "Submitting..."
+                          ? "Submitting..."
+                          : "Submit"}
+                      </Button>
+                    </>
+                  ) : (
+                    <p className="text-green-600">
+                      Assignment already submitted.
+                    </p>
+                  )}
+    
+                  {status[assignment.id] && (
+                    <p className="text-blue-500">{status[assignment.id]}</p>
+                  )}
+    
                   <>
+                  <div className="flex gap-4">
+
+                  
                     <Button
                       variant="outline"
                       className="mt-2"
-                      onClick={() => toggleFeedback(assignment.id)}
+                      onClick={() => {
+                        toggleFeedback(assignment.id);
+                        router.push("/dashboard/student/submissions");
+                      }}
                     >
-                      {feedbackVisible[assignment.id]
-                        ? "Hide Feedback"
-                        : "View Feedback"}
+                      {"View Feedback"}
                     </Button>
-
+                    </div>
                     {feedbackVisible[assignment.id] && feedback && (
                       <div className="bg-gray-50 p-2 border rounded mt-2">
                         <p>
@@ -240,12 +245,12 @@ export default function StudentAssignments() {
                       </div>
                     )}
                   </>
-                
-              </CardContent>
-            </Card>
-          );
-        })}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+    
 }
