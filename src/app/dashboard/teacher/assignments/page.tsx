@@ -2,10 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 
@@ -118,7 +124,7 @@ export default function UploadAssignment() {
       toast.success("Assignment uploaded successfully!");
       router.push("/dashboard/teacher/assignments");
     } catch (error) {
-      toast.error( "Error uploading assignment.");
+      toast.error("Error uploading assignment.");
       console.error("Upload error:", error);
     } finally {
       setLoading(false);
@@ -135,57 +141,62 @@ export default function UploadAssignment() {
   return (
     <div className="flex justify-center items-center self-center">
       <Card className=" w-full md:w-[500px] shadow-lg border border-gray-200 p-4">
-        <CardHeader>
-        </CardHeader>
+        <CardHeader></CardHeader>
         <CardContent className="space-y-4">
           {teacherName && (
             <p className="font-semibold text-2xl text-white">
-              <span className="font-semibold text-white">Teacher:</span> {teacherName}
+              <span className="font-semibold text-white">Teacher:</span>{" "}
+              {teacherName}
             </p>
           )}
-           <div className="flex flex-col gap-1 ">
-          <Label className="">Assigment title</Label>
-          <Input
-            type="text"
-            placeholder="Enter assignment title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+          <div className="flex flex-col gap-1 ">
+            <Label className="">Assigment title</Label>
+            <Input
+              type="text"
+              placeholder="Enter assignment title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="flex flex-col gap-1 ">
-          <Label className="">Due Date</Label>
-          <Input
-            type="date"
-            placeholder="Due Date"
-            value={dueDate}
-
-            onChange={(e) => setDueDate(e.target.value)}
-          />
+            <Label className="">Due Date</Label>
+            <Input
+              type="date"
+              placeholder="Due Date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
           </div>
-         
-          <div className="flex flex-col gap-1 ">
-          
-          <Label>Select Class</Label>
-          <Select onValueChange={(value) => setClassId(value)}>
-  <SelectTrigger className="w-full p-2 border border-gray-300 rounded-md">
-    <SelectValue placeholder="Select a class" />
-  </SelectTrigger>
-  <SelectContent>
-    {classes.map((cls) => (
-      <SelectItem className="bg-black/10 hover:bg-black" key={cls.id} value={cls.id }>
-        {cls.Cname}
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
-</div>
-    <div className="flex flex-col gap-1 ">
 
-          <Label className="mb-1">Upload Assignment</Label>
-          <Input type="file" onChange={handleFileChange} />
-          <Button onClick={handleUpload} className="w-full mt-3" disabled={loading}>
-            {loading ? "Uploading..." : "Upload Assignment"}
-          </Button>
+          <div className="flex flex-col gap-1 ">
+            <Label>Select Class</Label>
+            <Select onValueChange={(value) => setClassId(value)}>
+              <SelectTrigger className="w-full p-2 border border-gray-300 rounded-md">
+                <SelectValue placeholder="Select a class" />
+              </SelectTrigger>
+              <SelectContent>
+                {classes.map((cls) => (
+                  <SelectItem
+                    className="bg-black/10 hover:bg-black"
+                    key={cls.id}
+                    value={cls.id}
+                  >
+                    {cls.Cname}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-1 ">
+            <Label className="mb-1">Upload Assignment</Label>
+            <Input type="file" onChange={handleFileChange} />
+            <Button
+              onClick={handleUpload}
+              className="w-full mt-3"
+              disabled={loading}
+            >
+              {loading ? "Uploading..." : "Upload Assignment"}
+            </Button>
           </div>
         </CardContent>
       </Card>
