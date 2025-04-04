@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Menu, PersonStandingIcon } from "lucide-react";
@@ -17,6 +17,7 @@ import { DashboardLinks } from "@/frontendComponents/DashboardLinks";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   // ✅ Determine role based on URL
   const role: "student" | "teacher" = pathname.includes("/teacher")
@@ -84,6 +85,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   onClick={() => {
                     "use client";
                     sessionStorage.removeItem("teacherId");
+                    sessionStorage.removeItem("studentId");
+                    router.push("/")
                   }}
                 >
                   Logout {/* Add logout functionality here */}
