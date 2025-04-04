@@ -113,8 +113,8 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section
           className=" 
-
- py-12 md:py-24 lg:py-32 overflow-hidden"
+justify-center items-center self-center
+ py-12 md:py-24 lg:py-32 overflow-hidden min-h-screen"
         >
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
