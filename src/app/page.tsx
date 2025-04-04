@@ -759,8 +759,7 @@ export default function LandingPage() {
 
       <footer
         className=" 
-
- border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-950"
+      border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-gray-950"
       >
         <div className="container px-4 py-12 md:px-6">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-1">

@@ -64,18 +64,12 @@ export const teacherLinks: NavProps[] = [
   },
   {
     id: 3,
-    name: "View Classes",
-    href: "/dashboard/teacher/classes",
-    icon: BookOpenText, // 📖 Classes Icon
-  },
-  {
-    id: 4,
     name: "View Students",
     href: "/dashboard/teacher/students",
     icon: Users, // 👥 Students Icon
   },
   {
-    id: 5,
+    id: 4,
     name: "View Profile",
     href: "/dashboard/teacher/profile",
     icon: GraduationCap, // 🎓 Profile Icon
