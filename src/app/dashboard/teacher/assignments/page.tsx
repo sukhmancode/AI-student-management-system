@@ -179,11 +179,11 @@ export default function UploadAssignment() {
   </SelectContent>
 </Select>
 </div>
-<div className="flex flex-col gap-1 ">
+    <div className="flex flex-col gap-1 ">
 
-          <Label>Upload Assignment</Label>
+          <Label className="mb-1">Upload Assignment</Label>
           <Input type="file" onChange={handleFileChange} />
-          <Button onClick={handleUpload} className="w-full" disabled={loading}>
+          <Button onClick={handleUpload} className="w-full mt-3" disabled={loading}>
             {loading ? "Uploading..." : "Upload Assignment"}
           </Button>
           </div>

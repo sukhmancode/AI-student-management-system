@@ -139,30 +139,39 @@ export default function Submissions() {
                 </a>
               </p>
               <Button
-                onClick={() =>
-                  getFeedback(submission.assignment_id, submission.sub_id)
-                }
+                onClick={() => getFeedback(submission.assignment_id, submission.sub_id)}
               >
                 {visibleFeedbacks[submission.sub_id] ? "Hide Feedback" : "View Feedback"}
               </Button>
 
-              {visibleFeedbacks[submission.sub_id] && feedbacks[submission.sub_id] && (
+              {visibleFeedbacks[submission.sub_id] && (
                 <div className="mt-2 p-3 border rounded">
-                  <p>
-                    <strong className="text-2xl">Grade:</strong>{" "}
-                    {feedbacks[submission.sub_id]?.grade ?? "N/A"}
-                  </p>
-                  <p>
-                    <strong className="text-2xl">Feedback:</strong>{" "}
-                    <span className="whitespace-pre-line">
-                      {typedFeedbacks[submission.sub_id] ?? "No feedback available."}
-                      {/* Optional cursor effect: */}
-                      {typedFeedbacks[submission.sub_id]?.length !==
-                        feedbacks[submission.sub_id]?.comment?.length && (
-                        <span className="animate-pulse">|</span>
-                      )}
-                    </span>
-                  </p>
+                  {feedbacks[submission.sub_id] ? (
+                    <>
+                      <p>
+                        <strong className="text-2xl">Grade:</strong>{" "}
+                        {feedbacks[submission.sub_id]?.grade ?? "N/A"}
+                      </p>
+                      <p>
+                        <strong className="text-2xl">Feedback:</strong>{" "}
+                        <span className="whitespace-pre-line">
+                          {typedFeedbacks[submission.sub_id]?.length ? (
+                            <>
+                              {typedFeedbacks[submission.sub_id]}
+                              {typedFeedbacks[submission.sub_id]?.length !==
+                                feedbacks[submission.sub_id]?.comment?.length && (
+                                <span className="animate-pulse">|</span>
+                              )}
+                            </>
+                          ) : (
+                            <span className="italic text-gray-500 animate-pulse">typing...</span>
+                          )}
+                        </span>
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-gray-500">No feedback available.</p>
+                  )}
                 </div>
               )}
             </CardContent>
