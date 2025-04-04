@@ -50,29 +50,18 @@ export const teacherLinks: NavProps[] = [
     href: "/dashboard/teacher/assignments",
     icon: FilePlus, // 📝 Assignment Upload Icon
   },
+
   {
     id: 1,
-    name: "Class Schedule",
-    href: "/dashboard/teacher/schedule",
-    icon: CalendarDays, // 📅 Schedule Icon
-  },
-  {
-    id: 2,
-    name: "Student Reports",
-    href: "/dashboard/teacher/reports",
-    icon: FileBarChart, // 📊 Reports Icon
-  },
-  {
-    id: 3,
     name: "View Students",
     href: "/dashboard/teacher/students",
     icon: Users, // 👥 Students Icon
   },
   {
-    id: 4,
+    id: 2,
     name: "View Profile",
     href: "/dashboard/teacher/profile",
-    icon: GraduationCap, // 🎓 Profile Icon
+    icon: GraduationCap, 
   },
 ];
 

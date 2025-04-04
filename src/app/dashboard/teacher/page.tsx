@@ -80,10 +80,10 @@ export default function Classes() {
         <div className="grid grid-cols-1 w-full h-fit p-2">
           {classes.length > 0 ? (
             classes.map((cls) => (
-              <Card key={cls.id} className="shadow-lg border border-gray-200">
+              <Card key={cls.id} className="shadow-lg border bg-[#404040] border-gray-200">
                 <CardHeader     />
                 <CardContent className="flex gap-4 flex-col">
-                  <p className="text-2xl font-semibold text-center">{cls.Cname}</p>
+                  <p className="text-2xl font-semibold">{cls.Cname}</p>
                   <div className="flex items-center bg-primary rounded-md w-fit cursor-pointer">
                   <Button onClick={() => handleViewStudents(cls.id)} className="">
                     View Students
@@ -122,25 +122,34 @@ export default function Classes() {
                   </CardHeader>
                   <CardContent>
                     <h3 className="font-semibold">Assignments:</h3>
-                    <ul className="list-disc list-inside">
-                      {student.assignments.map((assignment, index) => (
-                        <li key={index} className="mt-1 list-none">
-                          {assignment.title}: Grade {assignment.grade}
+                    <ul className="list-disc list-inside ">
+                    {student.assignments.map((assignment, index) => (
+                      <li key={index} className="mt-2 list-none">
+                        <div>
+                          <p>
+                            <span className="font-medium">{assignment.title}</span>
+                          </p>
                           {assignment.url ? (
-                            <a
-                              href={assignment.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <Button className="ml-2 cursor-pointer bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 right-0">
-                                View
-                              </Button>
-                            </a>
+                            <div className="mt-2">
+                              <a
+                                href={assignment.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button className="cursor-pointer text-white text-1xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700">
+                                  View
+                                </Button>
+                                
+                                <p className="mt-3">Grade: <span className="text-semibold text-white text-xl font-semibold">{assignment.grade}</span></p>
+                              </a>
+                            </div>
                           ) : (
-                            <h2 className="font-semibold text-red-500">Not submitted yet</h2>
+                            <h2 className="font-semibold text-red-500 mt-2">Not submitted yet</h2>
                           )}
-                        </li>
-                      ))}
+                        </div>
+                      </li>
+                    ))}
+
                     </ul>
                   </CardContent>
                 </Card>

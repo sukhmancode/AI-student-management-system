@@ -5,18 +5,26 @@ import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
+
+interface Class {
+  id: string;
+  Cname: string;
+}
 
 export default function UploadAssignment() {
   const router = useRouter();
   const [teacherID, setTeacherID] = useState<string | null>(null);
+  const [teacherName, setTeacherName] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [classId, setClassId] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false); 
+  const [isClient, setIsClient] = useState(false);
+  const [classes, setClasses] = useState<Class[]>([]);
 
   useEffect(() => {
     setIsClient(true);
@@ -29,6 +37,43 @@ export default function UploadAssignment() {
       }
     }
   }, [router]);
+
+  useEffect(() => {
+    if (!teacherID) return;
+
+    const fetchTeacherDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://ai-teacher-api-xnd1.onrender.com/teacher/${teacherID}/detail`
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch teacher details");
+
+        const data = await response.json();
+        setTeacherName(data.Tname);
+      } catch (error) {
+        console.error("Error fetching teacher details:", error);
+      }
+    };
+
+    const fetchClasses = async () => {
+      try {
+        const response = await fetch(
+          `https://ai-teacher-api-xnd1.onrender.com/teacher/${teacherID}/classes`
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch classes");
+
+        const data = await response.json();
+        setClasses(data);
+      } catch (error) {
+        console.error("Error fetching classes:", error);
+      }
+    };
+
+    fetchTeacherDetails();
+    fetchClasses();
+  }, [teacherID]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -59,59 +104,89 @@ export default function UploadAssignment() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post(
+      const response = await fetch(
         "https://ai-teacher-api-xnd1.onrender.com/teacher/add_assignment",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          method: "POST",
+          body: formData,
+        }
       );
 
+      if (!response.ok) throw new Error("Error uploading assignment.");
+
+      await response.json();
       toast.success("Assignment uploaded successfully!");
-      console.log(response.data);
-      router.push("/dashboard/teacher/assignments"); // Redirect after successful upload
-    } catch (error: any) {
-      const errorMessage =
-        error.response?.data?.message || "Error uploading assignment.";
-      toast.error(errorMessage);
+      router.push("/dashboard/teacher/assignments");
+    } catch (error) {
+      toast.error( "Error uploading assignment.");
       console.error("Upload error:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  if (!isClient) return null; // Prevents hydration errors
+  if (!isClient) return null;
 
-  if (!teacherID) return <p className="text-center text-gray-500">Loading...</p>;
+  if (!teacherID) {
+    router.push("/");
+    toast.success("Teacher ID not found");
+  }
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Card className="w-96 shadow-lg border border-gray-200 p-4">
+    <div className="flex justify-center items-center self-center">
+      <Card className=" w-full md:w-[500px] shadow-lg border border-gray-200 p-4">
         <CardHeader>
-          <CardTitle className="text-lg">Upload Assignment</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <p className="text-sm text-gray-500">Teacher ID: {teacherID}</p>
+          {teacherName && (
+            <p className="font-semibold text-2xl text-white">
+              <span className="font-semibold text-white">Teacher:</span> {teacherName}
+            </p>
+          )}
+           <div className="flex flex-col gap-1 ">
+          <Label className="">Assigment title</Label>
           <Input
             type="text"
             placeholder="Enter assignment title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+          </div>
+          <div className="flex flex-col gap-1 ">
+          <Label className="">Due Date</Label>
           <Input
             type="date"
             placeholder="Due Date"
             value={dueDate}
+
             onChange={(e) => setDueDate(e.target.value)}
           />
-          <Input
-            type="number"
-            placeholder="Class ID"
-            value={classId}
-            onChange={(e) => setClassId(e.target.value)}
-          />
+          </div>
+         
+          <div className="flex flex-col gap-1 ">
+          
+          <Label>Select Class</Label>
+          <Select onValueChange={(value) => setClassId(value)}>
+  <SelectTrigger className="w-full p-2 border border-gray-300 rounded-md">
+    <SelectValue placeholder="Select a class" />
+  </SelectTrigger>
+  <SelectContent>
+    {classes.map((cls) => (
+      <SelectItem className="bg-black/10 hover:bg-black" key={cls.id} value={cls.id }>
+        {cls.Cname}
+      </SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+</div>
+<div className="flex flex-col gap-1 ">
+
+          <Label>Upload Assignment</Label>
           <Input type="file" onChange={handleFileChange} />
           <Button onClick={handleUpload} className="w-full" disabled={loading}>
             {loading ? "Uploading..." : "Upload Assignment"}
           </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
