@@ -13,7 +13,13 @@ interface Assignment {
   cloudinary_url: string;
   due_date: string;
   Cname: string;
-  is_submitted?: boolean; // assume this is returned by the API
+  subm_id: number;
+  is_submitted?: boolean;
+}
+
+interface Feedback {
+  grade: number;
+  comment: string;
 }
 
 export default function StudentAssignments() {
@@ -22,16 +28,35 @@ export default function StudentAssignments() {
   const [studentId, setStudentId] = useState<string | null>(null);
   const [files, setFiles] = useState<{ [id: number]: File | null }>({});
   const [status, setStatus] = useState<{ [id: number]: string | null }>({});
+  const [feedbacks, setFeedbacks] = useState<{ [subm_id: number]: Feedback }>({});
 
   useEffect(() => {
     const id = sessionStorage.getItem("studentId");
-    if (!id) return router.push("/"); // Redirect if studentId not found
+    if (!id) return router.push("/");
     setStudentId(id);
 
+    // Fetch assignments
     axios
       .get(`https://ai-teacher-api-xnd1.onrender.com/student/assignments/${id}`)
       .then(({ data }) => setAssignments(data))
       .catch(() => setStatus({ 0: "Error fetching assignments." }));
+
+    // Fetch all feedbacks
+    axios
+      .get(`https://ai-teacher-api-xnd1.onrender.com/student/submissions/${id}`)
+      .then(({ data }) => {
+        const mapped: { [key: number]: Feedback } = {};
+        data.forEach((entry: any) => {
+          mapped[entry.sub_id] = {
+            grade: entry.grade,
+            comment: entry.feedback,
+          };
+        });
+        setFeedbacks(mapped);
+      })
+      .catch(() => {
+        console.error("Failed to fetch feedbacks");
+      });
   }, [router]);
 
   const handleFileChange = (assignmentId: number, file: File | null) => {
@@ -67,7 +92,6 @@ export default function StudentAssignments() {
         [assignmentId]: "Submitted successfully!",
       }));
 
-      // Update assignment status after successful submission
       setAssignments((prev) =>
         prev.map((a) =>
           a.id === assignmentId ? { ...a, is_submitted: true } : a
@@ -103,8 +127,7 @@ export default function StudentAssignments() {
                 <strong>Class:</strong> {assignment.Cname}
               </p>
               <p>
-                <strong>Due Date:</strong>{" "}
-                {assignment.due_date.split("T")[0]}
+                <strong>Due Date:</strong> {assignment.due_date.split("T")[0]}
               </p>
               <p>
                 <strong>File:</strong>{" "}
@@ -122,10 +145,7 @@ export default function StudentAssignments() {
                   <Input
                     type="file"
                     onChange={(e) =>
-                      handleFileChange(
-                        assignment.id,
-                        e.target.files?.[0] || null
-                      )
+                      handleFileChange(assignment.id, e.target.files?.[0] || null)
                     }
                   />
                   <Button
@@ -144,6 +164,27 @@ export default function StudentAssignments() {
               {status[assignment.id] && (
                 <p className="text-blue-500">{status[assignment.id]}</p>
               )}
+
+              {/* Feedback Display */}
+              {(() => {
+                const feedback = feedbacks[assignment.subm_id];
+                if (!feedback) return null;
+
+                return (
+                  <div className="bg-gray-50 p-2 border rounded">
+                    <p>
+                      <strong>Grade:</strong>{" "}
+                      {typeof feedback.grade === "number" && feedback.grade >= 0
+                        ? feedback.grade
+                        : "Not graded"}
+                    </p>
+                    <p>
+                      <strong>Feedback:</strong>{" "}
+                      {feedback.comment || "No feedback available."}
+                    </p>
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         ))}
