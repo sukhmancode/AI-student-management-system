@@ -33,7 +33,7 @@ export default function StudentAssignments() {
       )
       .then((response) => setStudents(response.data))
       .catch((error) => console.error("Error fetching student data", error));
-  }, [teacherID]); // Only fetch data when `teacherID` is available
+  }, [teacherID]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">

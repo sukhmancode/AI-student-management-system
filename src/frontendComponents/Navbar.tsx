@@ -100,7 +100,7 @@ export function Header() {
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-600">
             <BookOpen className="h-5 w-5 text-white" />
           </div>
-          <span className="text-xl font-bold bg-clip-text text-transparent text-white  ">
+          <span className="text-xl font-bold bg-clip-text  ">
           EduFlow
           </span>
         </motion.div>
@@ -139,25 +139,30 @@ hover:text-white  text-white hover:bg-transparent  transition-all duration-200 l
                 Log in
               </Button>
             </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>LogIn</DialogTitle>
-                <DialogDescription>
-                  <Tabs defaultValue="account" className="w-[400px]">
-                    <TabsList>
+            <DialogContent className="flex justify-center items-center">
+              <DialogHeader className="w-full">
+                <DialogTitle className="text-center mb-2 text-2xl">Log In</DialogTitle>
+                <DialogDescription className="flex flex-col items-center">
+                  <Tabs defaultValue="account" className="w-[100%] max-w-[400px]">
+                    <TabsList className="flex justify-center w-full mb-4">
                       <TabsTrigger value="Teacher">Teacher</TabsTrigger>
                       <TabsTrigger value="student">Student</TabsTrigger>
+                      <TabsTrigger value="College">College</TabsTrigger>
                     </TabsList>
                     <TabsContent value="Teacher">
                       <TeacherLogin />
                     </TabsContent>
                     <TabsContent value="student">
-                      <StudentLogin/>
+                      <StudentLogin />
+                    </TabsContent>
+                    <TabsContent value="College">
+                      <p className="text-2xl items-center text-center text-white">COMING SOON! </p>
                     </TabsContent>
                   </Tabs>
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
+
           </Dialog>
         </motion.div>
       </div>
