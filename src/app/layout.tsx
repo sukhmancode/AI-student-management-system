@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider defaultTheme="dark">
+        <ThemeProvider defaultTheme="dark"  disableTransitionOnChange>
           {children}
         </ThemeProvider>
         <Toaster/>
