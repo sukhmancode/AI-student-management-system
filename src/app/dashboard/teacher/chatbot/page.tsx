@@ -13,20 +13,21 @@ export default function Chatbot() {
   const [typing, setTyping] = useState(false);
 
   const typeText = (text: string) => {
-    let index = 0;
-    setResponse("");
+    let index = 0; 
+    setResponse(text[0]);   
     setTyping(true);
-
+  
     const interval = setInterval(() => {
       setResponse((prev) => prev + text[index]);
       index++;
-
+  
       if (index >= text.length) {
         clearInterval(interval);
         setTyping(false);
       }
-    }, 25); // Adjust speed (ms per character)
+    }, 25);
   };
+  
 
   const handleSend = async () => {
     if (!message.trim()) {
@@ -47,7 +48,10 @@ export default function Chatbot() {
         }
       );
 
+
       const reply = data.FeedBack || "No response from chatbot.";
+      console.log(reply);
+      
       setFullResponse(reply);
       typeText(reply);
     } catch (error) {
@@ -79,7 +83,7 @@ export default function Chatbot() {
         </Button>
 
         {response && (
-          <div className="mt-4 p-3 border rounded  text-white text-sm whitespace-pre-line min-h-[50px]">
+          <div className="mt-4 p-3 border rounded text-white text-sm whitespace-pre-line min-h-[50px]">
             {response}
             {typing && <span className="animate-pulse ml-1">|</span>}
           </div>
