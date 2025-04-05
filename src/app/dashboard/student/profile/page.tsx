@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 import {
@@ -12,7 +11,6 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-// Define student interface
 interface Student {
   id: number;
   Sname: string;
@@ -23,17 +21,22 @@ interface Student {
 }
 
 export default function Profile() {
-  const { student_id } = useParams();
   const [student, setStudent] = useState<Student | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!student_id) return;
+    const studentId = sessionStorage.getItem("studentId");
+
+    if (!studentId) {
+      toast.error("No student ID found in session.");
+      setLoading(false);
+      return;
+    }
 
     const fetchStudent = async () => {
       try {
         const res = await axios.get<Student>(
-          `https://ai-teacher-api-xnd1.onrender.com/student/${student_id}/details`
+          `https://ai-teacher-api-xnd1.onrender.com/student/${studentId}/details`
         );
         setStudent(res.data);
       } catch (error) {
@@ -45,7 +48,7 @@ export default function Profile() {
     };
 
     fetchStudent();
-  }, [student_id]);
+  }, []);
 
   if (loading) {
     return <div className="p-4">Loading student profile...</div>;
@@ -56,21 +59,21 @@ export default function Profile() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6">
+    <div className="max-w-[500px] mx-auto p-6">
       <Card>
         <CardHeader>
-          <CardTitle>{student.Sname}</CardTitle>
-          <CardDescription>Student ID: {student.id}</CardDescription>
+          <CardTitle className="text-2xl text-white text-center">{student.Sname}</CardTitle>
+          <CardDescription className="text-2xl text-center">Student ID: {student.id}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           <div>
-            <strong>Email:</strong> {student.Semail}
+            <strong className="text-xl" >Email:</strong> <span className="text-xl">{student.Semail}</span>
           </div>
           <div>
-            <strong>Contact:</strong> {student.Scontact}
+            <strong className="text-xl" >Contact:</strong> <span className="text-xl">{student.Scontact}</span>
           </div>
           <div>
-            <strong>College ID:</strong> {student.college_id}
+            <strong className="text-xl" >College ID:</strong> <span className="text-xl">{student.college_id}</span>
           </div>
         </CardContent>
       </Card>

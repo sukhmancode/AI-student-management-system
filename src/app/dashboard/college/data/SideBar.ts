@@ -28,8 +28,8 @@ export const SideBarData: LinkArray[] = [
     href: "/dashboard/college/viewteachers",
     value: "View Teachers",
   },
-  {
-    href: "/dashboard/college/enroll",
-    value: "Enroll Students",
-  },
+  // {
+  //   href: "/dashboard/college/enroll",
+  //   value: "Enroll Students",
+  // },
 ];
