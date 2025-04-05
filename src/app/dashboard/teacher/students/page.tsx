@@ -51,16 +51,16 @@ export default function StudentAssignments() {
               </p>
               <div className="mt-2">
                 <h3 className="font-semibold">Assignments:</h3>
-                <ul className="mt-1 space-y-1">
+                <ul className="mt-1 space-y-1 bg-muted-foreground p-2 rounded-md">
                   {student.assignments.length > 0 ? (
                     student.assignments.map((assignment, index) => (
                       <li
                         key={index}
-                        className="flex justify-between text-sm bg-gray-100 p-2 rounded"
+                        className="flex justify-between text-sm p-2 rounded"
                       >
-                        <span className="text-black">{assignment.title}</span>
-                        <span className="font-bold text-black">
-                          {assignment.grade}
+                        <span className="font-semibold">{assignment.title}</span>
+                        <span className="font-bold ">
+                         Grade: {assignment.grade}
                         </span>
                       </li>
                     ))

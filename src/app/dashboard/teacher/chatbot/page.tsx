@@ -63,7 +63,7 @@ export default function Chatbot() {
   return (
     <div className="flex flex-col items-center justify-center p-4 ">
       <div className="w-full max-w-md p-6 rounded shadow space-y-4">
-        <h1 className="text-2xl font-semibold text-center">Student Chatbot</h1>
+        <h1 className="text-2xl font-semibold text-center">Teacher Chatbot</h1>
 
         <textarea
           className="w-full border border-gray-300 p-2 rounded resize-none"
