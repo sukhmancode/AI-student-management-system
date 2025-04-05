@@ -10,6 +10,8 @@ import {
   GraduationCap,
   LucideProps,
   LayoutDashboardIcon,
+  Bot,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -47,6 +49,12 @@ export const studentLinks: NavProps[] = [
     href: "/dashboard/student/reports",
     icon: FileBarChart, // 📊 Reports Icon
   },
+  {
+    id: 3,
+    name: "ChatBot",
+    href: "/dashboard/student/chatbot",
+    icon: Bot, // 📊 Reports Icon
+  },
 ];
 
 // Teacher Links
@@ -75,6 +83,18 @@ export const teacherLinks: NavProps[] = [
     name: "View Profile",
     href: "/dashboard/teacher/profile",
     icon: GraduationCap, 
+  },
+  {
+    id: 3,
+    name: "ChatBot",
+    href: "/dashboard/teacher/chatbot",
+    icon: Bot, // 📊 Reports Icon
+  },
+  {
+    id: 4,
+    name: "SendEmail",
+    href: "/dashboard/teacher/sendemail",
+    icon: MessageCircle, // 📊 Reports Icon
   },
 ];
 
