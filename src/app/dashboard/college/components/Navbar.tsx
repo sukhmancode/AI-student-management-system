@@ -4,11 +4,9 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
-import { Link, Menu, PersonStandingIcon } from "lucide-react";
+import { Menu, PersonStandingIcon } from "lucide-react";
 import React, { useState } from "react";
 import "../styles/sidebar.scss";
 import Sidebar from "./Sidebar";
@@ -37,19 +35,16 @@ export default function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   "use client";
                   sessionStorage.removeItem("teacherId");
                   sessionStorage.removeItem("collegeId");
                   sessionStorage.removeItem("studentId");
-                  window.location.href="/"
+                  window.location.href = "/";
                 }}
               >
-                Logout {/* Add logout functionality here */}
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
