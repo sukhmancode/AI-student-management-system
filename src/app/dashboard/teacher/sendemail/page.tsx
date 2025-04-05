@@ -20,10 +20,9 @@ export default function SendMail() {
     setLoading(true);
 
     try {
-      // Replace this with your actual backend endpoint
-      await axios.post("https://your-api/send-email", {
+      await axios.post("https://ai-teacher-api-xnd1.onrender.com/teacher/send_Mail", {
         email,
-        message,
+        msg: message, // ✅ match backend expected key
       });
 
       toast.success("Email sent successfully!");
@@ -39,7 +38,7 @@ export default function SendMail() {
 
   return (
     <div className="flex justify-center items-center  p-4">
-      <div className="w-full max-w-md  shadow-md p-6 rounded space-y-4">
+      <div className="w-full max-w-md shadow-md p-6 rounded space-y-4">
         <h2 className="text-2xl font-bold text-center">Send Email to Student</h2>
 
         <Input
