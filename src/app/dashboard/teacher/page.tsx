@@ -80,7 +80,7 @@ export default function Classes() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 w-full h-fit p-2">
+        <div className="flex flex-wrap gap-4">
           {classes.length > 0 ? (
             classes.map((cls) => (
               <Card key={cls.id} className="shadow-lg border bg-[#404040] border-gray-200">

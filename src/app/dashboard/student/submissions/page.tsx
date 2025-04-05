@@ -14,19 +14,13 @@ interface Submission {
   feedback: string | null;
 }
 
-interface FeedbackData {
-  grade: number;
-  comment: string;
-}
-
 export default function Submissions() {
   const [studentId, setStudentId] = useState<string | null>(null);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
-  const [feedbacks, setFeedbacks] = useState<{ [sub_id: number]: FeedbackData | null }>({});
-  const [visibleFeedbacks, setVisibleFeedbacks] = useState<{ [sub_id: number]: boolean }>({});
-  const [typedFeedbacks, setTypedFeedbacks] = useState<{ [sub_id: number]: string }>({});
-  const [typingFeedback, setTypingFeedback] = useState<number | null>(null); // ✅ new state
+  const [feedbackState, setFeedbackState] = useState<{ [sub_id: number]: string }>({});
+  const [visible, setVisible] = useState<{ [sub_id: number]: boolean }>({});
+  const [typing, setTyping] = useState<number | null>(null);
 
   useEffect(() => {
     const id = sessionStorage.getItem("studentId");
@@ -49,23 +43,25 @@ export default function Submissions() {
     let i = 0;
     const speed = 20;
     const interval = setInterval(() => {
-      setTypedFeedbacks((prev) => ({
+      setFeedbackState((prev) => ({
         ...prev,
         [sub_id]: text.slice(0, i + 1),
       }));
       i++;
       if (i >= text.length) {
         clearInterval(interval);
-        setTypingFeedback(null); // ✅ stop typing
+        setTyping(null);
       }
     }, speed);
   };
 
-  const getFeedback = async (ass_id: number, sub_id: number) => {
+  const getOrGenerateFeedback = async (submission: Submission) => {
+    const { assignment_id, sub_id, feedback, cloudinary_url } = submission;
     if (!studentId) return;
 
-    if (feedbacks[sub_id]) {
-      setVisibleFeedbacks((prev) => ({
+    // If already fetched, toggle visibility
+    if (feedbackState[sub_id]) {
+      setVisible((prev) => ({
         ...prev,
         [sub_id]: !prev[sub_id],
       }));
@@ -73,39 +69,32 @@ export default function Submissions() {
     }
 
     try {
-      setTypingFeedback(sub_id); // ✅ start typing
-      const { data } = await axios.get(
-        `https://ai-teacher-api-xnd1.onrender.com/student/FeedBack/${studentId}/${ass_id}/${sub_id}`
-      );
+      setTyping(sub_id);
 
-      const comment = data.FeedBack || "No feedback available.";
+      let finalFeedback = feedback;
 
-      setFeedbacks((prev) => ({
-        ...prev,
-        [sub_id]: {
-          grade: data.Grade,
-          comment,
-        },
-      }));
+      // If no feedback exists, generate one
+      if (!feedback) {
+        const { data } = await axios.get(
+          `https://ai-teacher-api-xnd1.onrender.com/student/FeedBack/${studentId}/${assignment_id}/${sub_id}`
+        );
+        finalFeedback = data.FeedBack || "No feedback available.";
+      }
 
-      setTypedFeedbacks((prev) => ({
+      setFeedbackState((prev) => ({
         ...prev,
         [sub_id]: "",
       }));
 
-      setVisibleFeedbacks((prev) => ({
+      setVisible((prev) => ({
         ...prev,
         [sub_id]: true,
       }));
 
-      typeFeedback(sub_id, comment);
-    } catch (error) {
-      console.error("Error fetching feedback:", error);
-      setFeedbacks((prev) => ({
-        ...prev,
-        [sub_id]: null,
-      }));
-      setTypingFeedback(null); // ✅ clear typing on error
+      typeFeedback(sub_id, finalFeedback as string);
+    } catch (err) {
+      console.error("Error fetching/generating feedback", err);
+      setTyping(null);
     }
   };
 
@@ -146,44 +135,40 @@ export default function Submissions() {
               </p>
 
               <Button
-                onClick={() => getFeedback(submission.assignment_id, submission.sub_id)}
-                disabled={typingFeedback === submission.sub_id}
+                onClick={() => getOrGenerateFeedback(submission)}
+                disabled={typing === submission.sub_id}
               >
-                {typingFeedback === submission.sub_id
+                {typing === submission.sub_id
                   ? "Typing..."
-                  : visibleFeedbacks[submission.sub_id]
+                  : visible[submission.sub_id]
                   ? "Hide Feedback"
                   : "View Feedback"}
               </Button>
 
-              {visibleFeedbacks[submission.sub_id] && (
+              {visible[submission.sub_id] && (
                 <div className="mt-2 p-3 border rounded">
-                  {feedbacks[submission.sub_id] ? (
-                    <>
-                      <p>
-                        <strong className="text-2xl">Grade:</strong>{" "}
-                        {feedbacks[submission.sub_id]?.grade ?? "N/A"}
-                      </p>
-                      <p>
-                        <strong className="text-2xl">Feedback:</strong>{" "}
-                        <span className="whitespace-pre-line">
-                          {typedFeedbacks[submission.sub_id]?.length ? (
-                            <>
-                              {typedFeedbacks[submission.sub_id]}
-                              {typedFeedbacks[submission.sub_id]?.length !==
-                                feedbacks[submission.sub_id]?.comment?.length && (
-                                <span className="animate-pulse">|</span>
-                              )}
-                            </>
-                          ) : (
-                            <span className="italic text-gray-500 animate-pulse">typing...</span>
+                  <p>
+                    <strong className="text-2xl">Grade:</strong>{" "}
+                    {submission.grade ?? "N/A"}
+                  </p>
+                  <p>
+                    <strong className="text-2xl">Feedback:</strong>{" "}
+                    <span className="whitespace-pre-line">
+                      {feedbackState[submission.sub_id] ? (
+                        <>
+                          {feedbackState[submission.sub_id]}
+                          {feedbackState[submission.sub_id]?.length <
+                            (submission.feedback?.length || 0) && (
+                            <span className="animate-pulse">|</span>
                           )}
+                        </>
+                      ) : (
+                        <span className="italic text-gray-500 animate-pulse">
+                          typing...
                         </span>
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-gray-500">No feedback available.</p>
-                  )}
+                      )}
+                    </span>
+                  </p>
                 </div>
               )}
             </CardContent>
