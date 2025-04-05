@@ -71,7 +71,6 @@ export default function page() {
                 secondaryHeading="Total Number of Students "
                 number={classes}
                 secondary=" Classes"
-                href={"/viewstudents"}
               />
               <Card
                 secondaryHeading="Total Number of Teachers "
