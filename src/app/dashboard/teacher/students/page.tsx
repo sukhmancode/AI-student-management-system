@@ -51,7 +51,7 @@ export default function StudentAssignments() {
               </p>
               <div className="mt-2">
                 <h3 className="font-semibold">Assignments:</h3>
-                <ul className="mt-1 space-y-1 bg-muted-foreground p-2 rounded-md">
+                <ul className="mt-1 space-y-1 bg-gray-800 p-2 rounded-md">
                   {student.assignments.length > 0 ? (
                     student.assignments.map((assignment, index) => (
                       <li
