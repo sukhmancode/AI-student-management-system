@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 interface Assignment {
   title: string;
   grade: number;
+  url: string | null;
+  Submitted_At: string | null;
 }
 
 interface Student {
@@ -27,12 +29,32 @@ export default function StudentAssignments() {
   useEffect(() => {
     if (!teacherID) return;
 
-    axios
-      .get(
-        `https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/${teacherID}`
-      )
-      .then((response) => setStudents(response.data))
-      .catch((error) => console.error("Error fetching student data", error));
+    const fetchStudents = async () => {
+      try {
+        // Step 1: Get teacher's classes
+        const classRes = await axios.get(
+          `https://ai-teacher-api-xnd1.onrender.com/teacher/${teacherID}/classes`
+        );
+
+        const classId = classRes.data.find((cls: any) => cls.id === 55)?.id;
+
+        if (!classId) {
+          console.error("Class with ID 55 not found");
+          return;
+        }
+
+        // Step 2: Fetch students
+        const studentRes = await axios.get(
+          `https://ai-teacher-api-xnd1.onrender.com/teacher/viewstudents/${teacherID}`
+        );
+
+        setStudents(studentRes.data);
+      } catch (error) {
+        console.error("Error fetching student data", error);
+      }
+    };
+
+    fetchStudents();
   }, [teacherID]);
 
   return (
@@ -51,17 +73,39 @@ export default function StudentAssignments() {
               </p>
               <div className="mt-2">
                 <h3 className="font-semibold">Assignments:</h3>
-                <ul className="mt-1 space-y-1 bg-gray-800 p-2 rounded-md">
+                <ul className="mt-1 space-y-2 bg-gray-800 p-2 rounded-md">
                   {student.assignments.length > 0 ? (
                     student.assignments.map((assignment, index) => (
                       <li
                         key={index}
-                        className="flex justify-between text-sm p-2 rounded"
+                        className="text-sm p-2 rounded bg-gray-700 text-white"
                       >
-                        <span className="font-semibold">{assignment.title}</span>
-                        <span className="font-bold ">
-                         Grade: {assignment.grade}
-                        </span>
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold">{assignment.title}</span>
+                          <span>Grade: {assignment.grade}</span>
+                        </div>
+                        {assignment.Submitted_At ? (
+                          <>
+                            <p className="text-xs text-green-300 mt-1">
+                              Submitted At:{" "}
+                              {new Date(assignment.Submitted_At).toLocaleString()}
+                            </p>
+                            {assignment.url && (
+                              <a
+                                href={assignment.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 text-xs underline mt-1 inline-block"
+                              >
+                                View Submission
+                              </a>
+                            )}
+                          </>
+                        ) : (
+                          <p className="text-xs text-red-300 mt-1">
+                            Not Submitted
+                          </p>
+                        )}
                       </li>
                     ))
                   ) : (
