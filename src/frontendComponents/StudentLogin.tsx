@@ -44,7 +44,7 @@ export function StudentLogin() {
         onSubmit={handleLogin}
         className="bg-secondary p-6 rounded-lg shadow-lg w-full"
       >
-        <h2 className="text-2xl text-center font-bold mb-4">Student Login</h2>
+        <h2 className="text-2xl text-center font-bold mb-4">Student Login.</h2>
         {error && <p className="text-red-500 mb-2">{error}</p>}
         <Input
           type="number"
