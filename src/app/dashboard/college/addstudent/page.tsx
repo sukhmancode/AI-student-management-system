@@ -19,8 +19,6 @@ interface Data {
 }
 
 export default function page() {
-  const [collegeid, setCollegeId] = useState<string | null>();
-  const [collegeName, setCollegeName] = useState<string>();
   const idRef = useRef<HTMLInputElement | null>(null);
   const name = useRef<HTMLInputElement | null>(null);
   const email = useRef<HTMLInputElement | null>(null);
@@ -28,7 +26,7 @@ export default function page() {
   const pnumber = useRef<HTMLInputElement | null>(null);
   const [loading, setloading] = useState<boolean>(false);
 
-  const handleFormSubmit = (e: any) => {
+  const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     setloading(true);
     const obj: Data = {
@@ -38,21 +36,46 @@ export default function page() {
       number: 0,
       pass: "",
     };
-    if (
-      idRef.current &&
-      name.current &&
-      email.current &&
-      pass.current &&
-      pnumber.current
-    ) {
-      obj.id = idRef.current.value;
-      obj.email = email.current.value;
-      obj.name = name.current.value;
-      obj.number = pnumber.current.value;
-      obj.pass = pass.current.value;
+    try {
+      if (
+        idRef.current &&
+        name.current &&
+        email.current &&
+        pass.current &&
+        pnumber.current
+      ) {
+        obj.id = idRef.current.value;
+        obj.email = email.current.value;
+        obj.name = name.current.value;
+        obj.number = pnumber.current.value;
+        obj.pass = pass.current.value;
+        const response = await axios.post(
+          "https://ai-teacher-api-xnd1.onrender.com/college/add_student/",
+          obj
+        );
+
+        if (response.status === 200 && response.data.Message === "Success") {
+          alert("Student added successfully!");
+
+          idRef.current.value = "";
+          name.current.value = "";
+          pass.current.value = "";
+          email.current.value = "";
+          pnumber.current.value = "";
+        } else {
+          alert("Failed to add student. Please check the data.");
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong while adding the student.");
+    } finally {
+      setloading(false);
     }
   };
 
+  const [collegeid, setCollegeId] = useState<string | null>();
+  const [collegeName, setCollegeName] = useState<string>();
   const handleCollegeDetails = (collegeid: string) => {
     const url1 = `https://ai-teacher-api-xnd1.onrender.com/college/${collegeid}/details
         `;
@@ -151,7 +174,7 @@ export default function page() {
                     disabled={loading ? true : false}
                     className="add-button"
                   >
-                    Add Student
+                    {loading ? "Adding..." : "Add Student"}
                   </button>
                 </form>
               </div>

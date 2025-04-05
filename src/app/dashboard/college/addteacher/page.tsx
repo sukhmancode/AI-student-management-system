@@ -17,19 +17,31 @@ export default function Page() {
   const idRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const passRef = useRef<HTMLInputElement | null>(null);
+  const email = useRef<HTMLInputElement | null>(null);
+  const number = useRef<HTMLInputElement | null>(null);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleFormSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
 
-    if (idRef.current && nameRef.current && passRef.current && collegeId) {
+    if (
+      idRef.current &&
+      nameRef.current &&
+      passRef.current &&
+      collegeId &&
+      email.current &&
+      number.current
+    ) {
       try {
         const payload = {
           id: parseInt(idRef.current.value),
           Sname: nameRef.current.value,
           Spass: passRef.current.value,
           college_id: parseInt(collegeId),
+          Scontact: parseInt(number.current.value),
+          Semail: email.current.value,
         };
 
         const response = await axios.post(
@@ -40,10 +52,11 @@ export default function Page() {
         if (response.status === 200 && response.data.Message === "Success") {
           alert("Student added successfully!");
 
-          // Clear inputs
           idRef.current.value = "";
           nameRef.current.value = "";
           passRef.current.value = "";
+          email.current.value = "";
+          number.current.value = "";
         } else {
           alert("Failed to add student. Please check the data.");
         }
@@ -90,35 +103,54 @@ export default function Page() {
           <h2 className="welcome-message">Welcome, {collegeName}</h2>
           <div className="flex justify-center">
             <div className="add-teacher-form-container flex bg-muted/40">
-              <h2 className="p-3 pl-5 text-2xl font-bold">Add Student</h2>
-              <form
-                className="add-teacher-form"
-                onSubmit={handleFormSubmit}
-              >
+              <h2 className="p-3 pl-5 text-2xl font-bold">Add Teacher</h2>
+              <form className="add-teacher-form" onSubmit={handleFormSubmit}>
                 <div className="input-wrapper">
-                  <label htmlFor="sid">Student ID:</label>
+                  <label htmlFor="sid">Teacher ID:</label>
                   <input
                     type="number"
                     id="sid"
-                    placeholder="Student ID"
+                    placeholder="Teacher ID"
                     className="bg-secondary"
                     ref={idRef}
                     required
                   />
                 </div>
                 <div className="input-wrapper">
-                  <label htmlFor="sname">Student Name:</label>
+                  <label htmlFor="sname">Teacher Name:</label>
                   <input
                     type="text"
                     id="sname"
-                    placeholder="Student Name"
+                    placeholder="Teacher Name"
                     className="bg-secondary"
                     ref={nameRef}
                     required
                   />
                 </div>
                 <div className="input-wrapper">
-                  <label htmlFor="spass">Student Password:</label>
+                  <label htmlFor="sname">Teacher Email:</label>
+                  <input
+                    type="text"
+                    id="sname"
+                    placeholder="Teacher Email"
+                    className="bg-secondary"
+                    ref={nameRef}
+                    required
+                  />
+                </div>
+                <div className="input-wrapper">
+                  <label htmlFor="sname">Teacher Contact:</label>
+                  <input
+                    type="number"
+                    id="sname"
+                    placeholder="Teacher Phone Number"
+                    className="bg-secondary"
+                    ref={nameRef}
+                    required
+                  />
+                </div>
+                <div className="input-wrapper">
+                  <label htmlFor="spass">Teacher Password:</label>
                   <input
                     type="password"
                     id="spass"
@@ -128,12 +160,8 @@ export default function Page() {
                     required
                   />
                 </div>
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="add-button"
-                >
-                  {loading ? "Adding..." : "Add Student"}
+                <button type="submit" disabled={loading} className="add-button">
+                  {loading ? "Adding..." : "Add Teacher"}
                 </button>
               </form>
             </div>

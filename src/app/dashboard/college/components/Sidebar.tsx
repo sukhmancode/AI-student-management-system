@@ -35,6 +35,7 @@ export default function Sidebar({ visible, onclose }: Props) {
                 <Link
                   className="text-muted-foreground hover:text-foreground flex items-center gap-3 p-2 rounded-lg transition-all hover:text-primary"
                   href={data.href}
+                  onClick={onclose}
                 >
                   {data.value}
                 </Link>

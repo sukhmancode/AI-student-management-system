@@ -60,7 +60,7 @@ export default function page() {
           </div>
           <div className="view-classes-content-container">
             <h2 className="welcome-message"> Welcome, {collegeName}</h2>
-            <div className="flex wrap p-5 gap-3">
+            <div className="flex flex-wrap p-5 gap-3">
               {classes?.map((data, index) => {
                 return (
                   <div className="card-container" key={index}>

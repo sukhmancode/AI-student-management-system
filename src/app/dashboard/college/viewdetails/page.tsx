@@ -55,7 +55,7 @@ export default function page() {
           </div>
           <div className="view-details-content-container">
             <h2 className="welcome-message"> Welcome, {collegeName}</h2>
-            <div className="flex wrap p-5 gap-3  details-content">
+            <div className="flex flex-wrap p-5 gap-3  details-content">
               {detail ? (
                 <>
                   <p className="heading">
